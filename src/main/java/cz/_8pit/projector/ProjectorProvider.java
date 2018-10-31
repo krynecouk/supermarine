@@ -2,15 +2,17 @@ package cz._8pit.projector;
 
 
 /**
- * Singleton and thread safe provider of {@link Projector}.
+ * Lazy-loaded thread safe singleton provider of {@link Projector}.
  *
  * @author Darius Kryszczuk
  */
 public class ProjectorProvider {
 
-    private static volatile Projector projector = new JFrameProjector();
-
     private ProjectorProvider(){}
+
+    private static class LazyHolder {
+        private static final JFrameProjector PROJECTOR = new JFrameProjector();
+    }
 
     /**
      * Returns instance of {@link Projector}.
@@ -18,6 +20,6 @@ public class ProjectorProvider {
      * @return the instance
      */
     public static Projector get() {
-        return projector;
+        return LazyHolder.PROJECTOR;
     }
 }
